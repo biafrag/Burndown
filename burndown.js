@@ -97,17 +97,23 @@
       return new Date(d.getFullYear(),d.getMonth(),d.getDate());
     }
 
-    function getDatesBetween(start,due){
-      const ds=[];
-      while(due - start > 0){
-        const f=formatDate(start),
-              w = start.getDay() === 0 || start.getDay() === 6,
+    function getDatesBetween(start, due){
+      const ds = [];
+      let cur = new Date(start); // clone
+
+      while(due - cur > 0){
+        const f = formatDate(cur),
+              w = cur.getDay() === 0 || cur.getDay() === 6,
               h = holidays.includes(f);
-        if(!w && !h) ds.push(new Date(start));
-        start.setDate(start.getDate() + 1);
+
+        if(!w && !h) ds.push(new Date(cur));
+        cur.setDate(cur.getDate() + 1);
       }
-      const fd=formatDate(due);
-      if(due.getDay() !== 0 && due.getDay() !== 6 && !holidays.includes(fd)) ds.push(due);
+
+      const fd = formatDate(due);
+      if(due.getDay() !== 0 && due.getDay() !== 6 && !holidays.includes(fd))
+        ds.push(new Date(due));
+
       return ds;
     }
 
