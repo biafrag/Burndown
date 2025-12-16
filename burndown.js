@@ -124,10 +124,8 @@
           if(issues.length === 0) return DrawErrorDOM("No issues associated with this milestone");
           const ms = issues[0].milestone;
           DrawBurndownDOM("Burndown: " + ms.title);
-          const s = new Date(ms.start_date);
-          const d = new Date(ms.due_date);
-          s.setMinutes(s.getMinutes() + s.getTimezoneOffset());
-          d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
+          const s = new Date(ms.start_date + "T00:00:00");
+          const d = new Date(ms.due_date   + "T00:00:00");
           drawChartDOM(issues, s, d);
         });
       }
